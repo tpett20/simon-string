@@ -5,10 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simon String</title>
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="./style.css">
+    <script defer src="./script.js"></script>
 </head>
 
 <body>
-
+    <header>
+        <h1>Simon String</h1>
+        <h3>A Memory Game</h3>
+    </header>
+    <main>
+        <section id="intro">
+            <ul>
+                <li>The game starts with an empty string.</li>
+                <li>Each round the string gets an additional character, which is shown to the player.</li>
+                <li>The player then has to type the entire string from the start.</li>
+                <li>The game continues with new rounds until the player gets it wrong.</li>
+            </ul>
+        </section>
+        <section id="game">
+            <p>New Character: <span id="new-char"></span></p>
+            <p id="message"></p>
+            <form>
+                <input type="text" id="text-field" />
+                <button id="submit-btn">Submit</button>
+            </form>
+            <p>Score: <span id="score"></span></p>
+        </section>
+    </main>
 </body>
 
 </html>
