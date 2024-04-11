@@ -32,7 +32,7 @@ function startNewRound() {
 }
 
 function getRandomChar() {
-    let num = Math.floor(Math.random() * 9)
+    let num = Math.floor(Math.random() * 10)
     return num.toString()
 }
 
@@ -43,9 +43,26 @@ function render() {
 }
 
 function handleSubmit(evt) {
-    // check the player's submission
-    // start a new round if it's correct
-    // otherwise, it's game over
-    // reset the text field
-    // render the updated game state
+    // prevent the page from automatically refreshing
+    evt.preventDefault()
+    const responseIsCorrect = checkSubmission()
+    if (responseIsCorrect === true) {
+        startNewRound()
+    } else {
+        gameOver()
+    }
+    // reset text field
+    textField.value = ""
+    render()
+}
+
+function checkSubmission() {
+    const submission = textField.value
+    return submission === string
+}
+
+function gameOver() {
+    message = `GAME OVER! String: ${string}`
+    // Show the Game Over message for 5 seconds, then restart the game
+    setTimeout(init, 5000)
 }
