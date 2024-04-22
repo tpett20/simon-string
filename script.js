@@ -1,6 +1,7 @@
 /* ~~~~ Variables ~~~~ */
 let string
 let stringDisplay
+let idx
 let newChar
 let score
 let message
@@ -13,6 +14,7 @@ const textField = document.querySelector("#text-field")
 const submitBtn = document.querySelector("#submit-btn")
 
 /* ~~~~ Event Listeners ~~~~ */
+document.addEventListener("keydown", handleKeyPress)
 submitBtn.addEventListener('click', handleSubmit)
 
 /* ~~~~ Functions ~~~~ */
@@ -29,8 +31,9 @@ function init() {
 
 function startNewRound() {
     newChar = getRandomChar()
+    idx = 0
     string += newChar
-    updateStringDisplay()
+    refreshStringDisplay()
     score = string.length - 1
 }
 
@@ -39,11 +42,10 @@ function getRandomChar() {
     return num.toString()
 }
 
-function updateStringDisplay() {
-    if (stringDisplay.length) {
-        stringDisplay[stringDisplay.length - 1] = "_"
-    }
+function refreshStringDisplay() {
+    stringDisplay = new Array(string.length - 1).fill("_")
     stringDisplay.push(newChar)
+
 }
 
 function render() {
@@ -62,6 +64,20 @@ function renderMessage() {
 
 function renderScore() {
     scoreEl.innerText = score
+}
+
+function handleKeyPress(evt) {
+    const key = evt.key
+    const code = key.charCodeAt()
+    if (code >= 48 && code <= 57) {
+        updateStringDisplay(key, idx)
+        idx++
+        render()
+    }
+}
+
+function updateStringDisplay(value, index) {
+    stringDisplay[idx] = value
 }
 
 function handleSubmit(evt) {
