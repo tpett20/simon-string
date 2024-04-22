@@ -69,15 +69,16 @@ function renderScore() {
 function handleKeyPress(evt) {
     const key = evt.key
     const code = key.charCodeAt()
-    if (code >= 48 && code <= 57) {
-        updateStringDisplay(key, idx)
-        idx++
-        render()
+    if (key === "Backspace") {
+        updateStringDisplay("_", --idx)
+    } else if (code >= 48 && code <= 57) {
+        updateStringDisplay(key, idx++)
     }
+    render()
 }
 
 function updateStringDisplay(value, index) {
-    stringDisplay[idx] = value
+    stringDisplay[index] = value
 }
 
 function handleSubmit(evt) {
