@@ -1,11 +1,12 @@
 /* ~~~~ Variables ~~~~ */
 let string
+let stringDisplay
 let newChar
 let score
 let message
 
 /* ~~~~ DOM Elements ~~~~ */
-const newCharEl = document.querySelector("#new-char")
+const stringDisplayEl = document.querySelector("#string-display")
 const msgEl = document.querySelector("#message")
 const scoreEl = document.querySelector("#score")
 const textField = document.querySelector("#text-field")
@@ -19,6 +20,7 @@ init()
 
 function init() {
     string = ""
+    stringDisplay = []
     score = 0
     message = "Type the Whole String Below"
     startNewRound()
@@ -28,6 +30,7 @@ function init() {
 function startNewRound() {
     newChar = getRandomChar()
     string += newChar
+    updateStringDisplay()
     score = string.length - 1
 }
 
@@ -36,9 +39,28 @@ function getRandomChar() {
     return num.toString()
 }
 
+function updateStringDisplay() {
+    if (stringDisplay.length) {
+        stringDisplay[stringDisplay.length - 1] = "_"
+    }
+    stringDisplay.push(newChar)
+}
+
 function render() {
-    newCharEl.innerText = newChar
+    renderStringDisplay()
+    renderMessage()
+    renderScore()
+}
+
+function renderStringDisplay() {
+    stringDisplayEl.innerText = stringDisplay.join(" ")
+}
+
+function renderMessage() {
     msgEl.innerText = message
+}
+
+function renderScore() {
     scoreEl.innerText = score
 }
 
