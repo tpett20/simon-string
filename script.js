@@ -8,6 +8,7 @@ let message
 
 /* ~~~~ DOM Elements ~~~~ */
 const stringDisplayEl = document.querySelector("#string-display")
+const lastCharEl = document.querySelector("#last-char")
 const msgEl = document.querySelector("#message")
 const scoreEl = document.querySelector("#score")
 const textField = document.querySelector("#text-field")
@@ -44,18 +45,31 @@ function getRandomChar() {
 
 function refreshStringDisplay() {
     stringDisplay = new Array(string.length - 1).fill("_")
-    stringDisplay.push(newChar)
-
 }
 
 function render() {
     renderStringDisplay()
+    renderLastChar()
     renderMessage()
     renderScore()
 }
 
 function renderStringDisplay() {
+    if (idx === 0) {
+        lastCharEl.classList.remove("hidden")
+    }
     stringDisplayEl.innerText = stringDisplay.join(" ")
+    if (string.length > 1) {
+        stringDisplayEl.innerText += " "
+    }
+}
+
+function renderLastChar() {
+    if (idx <= string.length - 1) {
+        lastCharEl.innerText = newChar
+    } else {
+        lastCharEl.classList.add("hidden")
+    }
 }
 
 function renderMessage() {
