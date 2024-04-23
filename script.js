@@ -1,3 +1,7 @@
+/* ~~~~ Constants ~~~~ */
+const blankStyle = ["col-2", "col-sm-1", "border", "border-secondary", "rounded"]
+const enteredStyle = ["col-2", "col-sm-1", "text-primary-emphasis", "bg-primary-subtle", "border", "border-primary-subtle", "rounded"]
+
 /* ~~~~ Variables ~~~~ */
 let string
 let stringDisplay
@@ -8,6 +12,7 @@ let message
 
 /* ~~~~ DOM Elements ~~~~ */
 const stringDisplayEl = document.querySelector("#string-display")
+const stringBoxSection = document.querySelector("#string-boxes")
 const lastCharEl = document.querySelector("#last-char")
 const msgEl = document.querySelector("#message")
 const scoreEl = document.querySelector("#score")
@@ -34,13 +39,33 @@ function startNewRound() {
     newChar = getRandomChar()
     idx = 0
     string += newChar
+    clearStringBoxes()
+    addStringBox()
     refreshStringDisplay()
     score = string.length - 1
 }
 
+
 function getRandomChar() {
     let num = Math.floor(Math.random() * 10)
     return num.toString()
+}
+
+function clearStringBoxes() {
+    const boxes = stringBoxSection.children
+    for (const box of boxes) {
+        box.innerText = "_"
+        box.className = ""
+        box.classList.add(...blankStyle)
+    }
+}
+
+function addStringBox() {
+    const box = document.createElement("div")
+    box.innerText = newChar
+    box.classList.add(...blankStyle)
+    box.classList.add("text-secondary")
+    stringBoxSection.appendChild(box)
 }
 
 function refreshStringDisplay() {
@@ -48,10 +73,21 @@ function refreshStringDisplay() {
 }
 
 function render() {
+    // renderStringBoxes()
     renderStringDisplay()
     renderLastChar()
     renderMessage()
     renderScore()
+}
+
+function renderStringBoxes() {
+    const boxes = stringBoxSection.children
+    for (let i = 0; i < boxes.length - 1; i++) {
+        const box = boxes[i]
+        box.innerText = "_"
+        box.className = ""
+        box.classList.add(...blankStyle)
+    }
 }
 
 function renderStringDisplay() {
@@ -93,6 +129,7 @@ function handleKeyPress(evt) {
 
 function updateStringDisplay(value, index) {
     stringDisplay[index] = value
+    stringBoxSection.children.item(index).innerText = value
 }
 
 function handleSubmit(evt) {
