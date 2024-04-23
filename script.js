@@ -1,6 +1,6 @@
 /* ~~~~ Constants ~~~~ */
-const blankStyle = ["col-2", "col-sm-1", "border", "border-secondary", "rounded"]
-const enteredStyle = ["col-2", "col-sm-1", "text-primary-emphasis", "bg-primary-subtle", "border", "border-primary-subtle", "rounded"]
+const blankStyle = ["col-2", "col-sm-1", "border", "border-secondary", "rounded", "mb-2"]
+const enteredStyle = ["col-2", "col-sm-1", "text-primary-emphasis", "bg-primary-subtle", "border", "border-primary-subtle", "rounded", "mb-2"]
 
 /* ~~~~ Variables ~~~~ */
 let string
@@ -127,8 +127,10 @@ function updateUserEntry(value, index) {
 function handleSubmit() {
     const responseIsCorrect = checkSubmission()
     if (responseIsCorrect === true) {
-        setTimeout(startNewRound, 500)
-        setTimeout(render, 600)
+        setTimeout(() => {
+            startNewRound()
+            render()
+        }, 500)
     } else {
         gameOver()
     }
