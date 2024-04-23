@@ -16,9 +16,11 @@ const stringBoxSection = document.querySelector("#string-boxes")
 const lastCharEl = document.querySelector("#last-char")
 const msgEl = document.querySelector("#message")
 const scoreEl = document.querySelector("#score")
+const numberKeysSection = document.querySelector("#number-keys")
 
 /* ~~~~ Event Listeners ~~~~ */
-document.addEventListener("keydown", handleKeyPress)
+document.addEventListener("keydown", handleNumberEntry)
+numberKeysSection.addEventListener("click", handleNumberEntry)
 
 /* ~~~~ Functions ~~~~ */
 init()
@@ -98,10 +100,16 @@ function renderScore() {
     scoreEl.innerText = score
 }
 
-function handleKeyPress(evt) {
-    const key = evt.key
+function handleNumberEntry(evt) {
+    if (evt.key) {
+        key = evt.key
+    } else if (evt.target.tagName === "BUTTON") {
+        key = evt.target.innerText
+    } else {
+        return
+    }
     const code = key.charCodeAt()
-    if (key === "Backspace") {
+    if (key === "Backspace" && idx > 0) {
         updateUserEntry("_", --idx)
     } else if (code >= 48 && code <= 57) {
         updateUserEntry(key, idx++)
@@ -119,11 +127,11 @@ function updateUserEntry(value, index) {
 function handleSubmit() {
     const responseIsCorrect = checkSubmission()
     if (responseIsCorrect === true) {
-        startNewRound()
+        setTimeout(startNewRound, 500)
+        setTimeout(render, 600)
     } else {
         gameOver()
     }
-    render()
 }
 
 function checkSubmission() {
@@ -135,4 +143,5 @@ function gameOver() {
     message = `GAME OVER! String: ${string}`
     // Show the Game Over message for 5 seconds, then restart the game
     setTimeout(init, 5000)
+    render()
 }
