@@ -1,6 +1,8 @@
 /* ~~~~ Constants ~~~~ */
 const blankStyle = ["col-2", "col-sm-1", "border", "border-secondary", "rounded", "mb-2"]
 const enteredStyle = ["col-2", "col-sm-1", "text-primary-emphasis", "bg-primary-subtle", "border", "border-primary-subtle", "rounded", "mb-2"]
+const correctStyle = ["col-2", "col-sm-1", "text-success-emphasis", "bg-success-subtle", "border", "border-success-subtle", "rounded", "mb-2"]
+const incorrectStyle = ["col-2", "col-sm-1", "text-danger-emphasis", "bg-danger-subtle", "border", "border-danger-subtle", "rounded", "mb-2"]
 
 /* ~~~~ Variables ~~~~ */
 let string
@@ -125,14 +127,19 @@ function updateUserEntry(value, index) {
 }
 
 function handleSubmit() {
+    runCheckingAnimation()
+    const animationTime = (string.length + 1) * 500
     const responseIsCorrect = checkSubmission()
     if (responseIsCorrect === true) {
         setTimeout(() => {
             startNewRound()
             render()
-        }, 500)
+        }, animationTime)
     } else {
-        gameOver()
+        setTimeout(() => {
+            init()
+            render()
+        }, animationTime + 1000)
     }
 }
 
@@ -141,9 +148,28 @@ function checkSubmission() {
     return submission === string
 }
 
-function gameOver() {
-    message = `GAME OVER! String: ${string}`
-    // Show the Game Over message for 5 seconds, then restart the game
-    setTimeout(init, 5000)
-    render()
+function runCheckingAnimation() {
+    const boxes = stringBoxSection.children
+    for (let i = 0; i < string.length; i++) {
+        const box = boxes[i]
+        const userLtr = userEntry[i]
+        const correctLtr = string[i]
+        const ltrIsCorrect = (userLtr === correctLtr) ? true : false
+        box.className = ""
+        setTimeout(showBoxCorrectStatus, 500 + i * 500, box, ltrIsCorrect)
+    }
 }
+
+function showBoxCorrectStatus(bx, isCorrect) {
+    bx.className = ""
+    if (isCorrect) {
+        bx.classList.add(...correctStyle)
+    } else {
+        bx.classList.add(...incorrectStyle)
+    }
+}
+
+// function gameOver(waitTime) {
+//     setTimeout(init, waitTime)
+//     render()
+// }
