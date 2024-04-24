@@ -12,6 +12,7 @@ let idx
 let newChar
 let score
 let message
+let btnsEnabled
 
 /* ~~~~ DOM Elements ~~~~ */
 const stringDisplayEl = document.querySelector("#string-display")
@@ -20,6 +21,7 @@ const lastCharEl = document.querySelector("#last-char")
 const msgEl = document.querySelector("#message")
 const scoreEl = document.querySelector("#score")
 const numberKeysSection = document.querySelector("#number-keys")
+const numberKeys = document.querySelectorAll(".num-btn")
 
 /* ~~~~ Event Listeners ~~~~ */
 document.addEventListener("keydown", handleNumberEntry)
@@ -51,6 +53,8 @@ function startNewRound() {
     string += newChar
     resetUserEntry()
     addStringBox()
+    enableNumberKeys()
+    btnsEnabled = true
     score = string.length - 1
 }
 
@@ -68,6 +72,10 @@ function resetUserEntry() {
 function addStringBox() {
     const box = document.createElement("div")
     stringBoxSection.appendChild(box)
+}
+
+function enableNumberKeys() {
+    numberKeys.forEach(numKey => numKey.disabled = false)
 }
 
 function render() {
@@ -104,6 +112,7 @@ function renderScore() {
 }
 
 function handleNumberEntry(evt) {
+    if (btnsEnabled === false) return
     if (evt.key) {
         key = evt.key
     } else if (evt.target.tagName === "BUTTON") {
@@ -129,6 +138,8 @@ function updateUserEntry(value, index) {
 
 function handleSubmit() {
     runCheckingAnimation()
+    disableNumberKeys()
+    btnsEnabled = false
     const animationTime = (string.length + 1) * 500
     const responseIsCorrect = checkSubmission()
     if (responseIsCorrect === true) {
@@ -150,6 +161,10 @@ function handleSubmit() {
 function checkSubmission() {
     const submission = userEntry.join("")
     return submission === string
+}
+
+function disableNumberKeys() {
+    numberKeys.forEach(numKey => numKey.disabled = true)
 }
 
 function runCheckingAnimation() {
@@ -196,8 +211,3 @@ function showCorrectedAnswers(boxData) {
         box.classList.add(...revealStyle)
     }
 }
-
-// function gameOver(waitTime) {
-//     setTimeout(init, waitTime)
-//     render()
-// }
