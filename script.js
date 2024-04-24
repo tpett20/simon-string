@@ -3,6 +3,7 @@ const blankStyle = ["col-2", "col-sm-1", "border", "border-secondary", "rounded"
 const enteredStyle = ["col-2", "col-sm-1", "text-primary-emphasis", "bg-primary-subtle", "border", "border-primary-subtle", "rounded", "mb-2"]
 const correctStyle = ["col-2", "col-sm-1", "text-success-emphasis", "bg-success-subtle", "border", "border-success-subtle", "rounded", "mb-2"]
 const incorrectStyle = ["col-2", "col-sm-1", "text-danger-emphasis", "bg-danger-subtle", "border", "border-danger-subtle", "rounded", "mb-2"]
+const revealStyle = ["col-2", "col-sm-1", "text-warning-emphasis", "bg-warning-subtle", "border", "border-warning-subtle", "rounded", "mb-2"]
 
 /* ~~~~ Variables ~~~~ */
 let string
@@ -137,9 +138,12 @@ function handleSubmit() {
         }, animationTime)
     } else {
         setTimeout(() => {
+            convertWrongAnswers()
+        }, animationTime + 500)
+        setTimeout(() => {
             init()
             render()
-        }, animationTime + 1000)
+        }, animationTime + 2000)
     }
 }
 
@@ -152,11 +156,10 @@ function runCheckingAnimation() {
     const boxes = stringBoxSection.children
     for (let i = 0; i < string.length; i++) {
         const box = boxes[i]
-        const userLtr = userEntry[i]
-        const correctLtr = string[i]
-        const ltrIsCorrect = (userLtr === correctLtr) ? true : false
-        box.className = ""
-        setTimeout(showBoxCorrectStatus, 500 + i * 500, box, ltrIsCorrect)
+        const userChar = userEntry[i]
+        const correctChar = string[i]
+        const charIsCorrect = (userChar === correctChar) ? true : false
+        setTimeout(showBoxCorrectStatus, 500 + i * 500, box, charIsCorrect)
     }
 }
 
@@ -166,6 +169,31 @@ function showBoxCorrectStatus(bx, isCorrect) {
         bx.classList.add(...correctStyle)
     } else {
         bx.classList.add(...incorrectStyle)
+    }
+}
+
+function convertWrongAnswers() {
+    const boxes = stringBoxSection.children
+    const wrongBoxData = []
+    for (let i = 0; i < string.length; i++) {
+        const box = boxes[i]
+        const userChar = userEntry[i]
+        const correctChar = string[i]
+        const charIsCorrect = (userChar === correctChar) ? true : false
+        if (!charIsCorrect) {
+            wrongBoxData.push([box, correctChar])
+        }
+    }
+    showCorrectedAnswers(wrongBoxData)
+}
+
+function showCorrectedAnswers(boxData) {
+    for (const item of boxData) {
+        const box = item[0]
+        const char = item[1]
+        box.innerText = char
+        box.className = ""
+        box.classList.add(...revealStyle)
     }
 }
 
