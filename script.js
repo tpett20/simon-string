@@ -4,6 +4,7 @@ const enteredStyle = ["col-2", "col-sm-1", "text-primary-emphasis", "bg-primary-
 const correctStyle = ["col-2", "col-sm-1", "text-success-emphasis", "bg-success-subtle", "border", "border-success-subtle", "rounded", "mb-2"]
 const incorrectStyle = ["col-2", "col-sm-1", "text-danger-emphasis", "bg-danger-subtle", "border", "border-danger-subtle", "rounded", "mb-2"]
 const revealStyle = ["col-2", "col-sm-1", "text-warning-emphasis", "bg-warning-subtle", "border", "border-warning-subtle", "rounded", "mb-2"]
+const timeUnit = 350
 
 /* ~~~~ Variables ~~~~ */
 let string
@@ -140,21 +141,21 @@ function handleSubmit() {
     runCheckingAnimation()
     disableNumberKeys()
     btnsEnabled = false
-    const animationTime = (string.length + 1) * 500
+    const animationTime = string.length * timeUnit
     const responseIsCorrect = checkSubmission()
     if (responseIsCorrect === true) {
         setTimeout(() => {
             startNewRound()
             render()
-        }, animationTime)
+        }, animationTime + timeUnit)
     } else {
         setTimeout(() => {
             convertWrongAnswers()
-        }, animationTime + 500)
+        }, animationTime + 2 * timeUnit)
         setTimeout(() => {
             init()
             render()
-        }, animationTime + 2000)
+        }, animationTime + 4 * timeUnit)
     }
 }
 
@@ -174,7 +175,7 @@ function runCheckingAnimation() {
         const userChar = userEntry[i]
         const correctChar = string[i]
         const charIsCorrect = (userChar === correctChar) ? true : false
-        setTimeout(showBoxCorrectStatus, 500 + i * 500, box, charIsCorrect)
+        setTimeout(showBoxCorrectStatus, timeUnit + i * timeUnit, box, charIsCorrect)
     }
 }
 
