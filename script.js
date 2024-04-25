@@ -1,5 +1,5 @@
 /* ~~~~ Constants ~~~~ */
-const baseStyle = ["col-2", "col-sm-1", "mb-2", "rounded", "border"]
+const baseStyle = ["col-2", "col-sm-1", "mx-1", "mb-2", "rounded", "border"]
 const enteredStyle = ["text-primary-emphasis", "bg-primary-subtle", "border-primary-subtle"]
 const correctStyle = ["text-success-emphasis", "bg-success-subtle", "border-success-subtle"]
 const incorrectStyle = ["text-danger-emphasis", "bg-danger-subtle", "border-danger-subtle"]
