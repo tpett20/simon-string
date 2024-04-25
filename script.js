@@ -1,9 +1,9 @@
 /* ~~~~ Constants ~~~~ */
-const blankStyle = ["col-2", "col-sm-1", "border", "border-secondary", "rounded", "mb-2"]
-const enteredStyle = ["col-2", "col-sm-1", "text-primary-emphasis", "bg-primary-subtle", "border", "border-primary-subtle", "rounded", "mb-2"]
-const correctStyle = ["col-2", "col-sm-1", "text-success-emphasis", "bg-success-subtle", "border", "border-success-subtle", "rounded", "mb-2"]
-const incorrectStyle = ["col-2", "col-sm-1", "text-danger-emphasis", "bg-danger-subtle", "border", "border-danger-subtle", "rounded", "mb-2"]
-const revealStyle = ["col-2", "col-sm-1", "text-warning-emphasis", "bg-warning-subtle", "border", "border-warning-subtle", "rounded", "mb-2"]
+const baseStyle = ["col-2", "col-sm-1", "mb-2", "rounded", "border"]
+const enteredStyle = ["text-primary-emphasis", "bg-primary-subtle", "border-primary-subtle"]
+const correctStyle = ["text-success-emphasis", "bg-success-subtle", "border-success-subtle"]
+const incorrectStyle = ["text-danger-emphasis", "bg-danger-subtle", "border-danger-subtle"]
+const revealStyle = ["text-warning-emphasis", "bg-warning-subtle", "border-warning-subtle"]
 const timeUnit = 350
 
 /* ~~~~ Variables ~~~~ */
@@ -93,13 +93,13 @@ function renderStringBoxes() {
         box.innerText = value
         box.className = ""
         if (value === "_") {
-            box.classList.add(...blankStyle)
+            box.classList.add(...baseStyle, "border-secondary")
             if (i === boxes.length - 1) {
                 box.classList.add("text-secondary")
                 box.innerText = newChar
             }
         } else {
-            box.classList.add(...enteredStyle)
+            box.classList.add(...baseStyle, ...enteredStyle)
         }
     }
 }
@@ -155,7 +155,7 @@ function handleSubmit() {
         setTimeout(() => {
             init()
             render()
-        }, animationTime + 4 * timeUnit)
+        }, animationTime + 5 * timeUnit)
     }
 }
 
@@ -182,9 +182,9 @@ function runCheckingAnimation() {
 function showBoxCorrectStatus(bx, isCorrect) {
     bx.className = ""
     if (isCorrect) {
-        bx.classList.add(...correctStyle)
+        bx.classList.add(...baseStyle, ...correctStyle)
     } else {
-        bx.classList.add(...incorrectStyle)
+        bx.classList.add(...baseStyle, ...incorrectStyle)
     }
 }
 
@@ -209,6 +209,6 @@ function showCorrectedAnswers(boxData) {
         const char = item[1]
         box.innerText = char
         box.className = ""
-        box.classList.add(...revealStyle)
+        box.classList.add(...baseStyle, ...revealStyle)
     }
 }
